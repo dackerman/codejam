@@ -2,7 +2,7 @@
 
 import {runEach, parseList, parseObject} from '../input-parser';
 
-function ropeTest(wires) {
+function calculateRopeCrossings(wires) {
     let crossCount = 0;
     
     for (let i = 0; i < wires.length; i++) {
@@ -20,7 +20,7 @@ function ropeTest(wires) {
     return crossCount;
 }
 
-export const spec = runEach(ropeTest, parseList(
+export const spec = runEach(calculateRopeCrossings, parseList(
     parseObject(line => {
         let  [left, right] = line.split(' ');
         left = parseInt(left);
