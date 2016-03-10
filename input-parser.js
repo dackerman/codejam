@@ -2,10 +2,12 @@ import fs from 'fs';
 
 function runRunEach(input, fn, nextParser) {
     const count = input.next();
+    let output = [];
     for (let i = 0; i < count; i++) {
         const result = fn(nextParser(input));
-        console.log(`Case #${i+1}: ${result}`);
+        output.push(`Case #${i+1}: ${result}`);
     }
+    return output;
 }
 
 function runParseList(input, nextParser) {
@@ -51,8 +53,13 @@ export function inputIterator(input) {
     return api;
 }
 
-export function run(filename, spec) {
+export function run(filename, outputFilename, spec) {
     let lines = fs.readFileSync(filename, {encoding: 'utf-8'}).split('\n');
     lines = lines.splice(0, lines.length - 1);
-    spec(inputIterator(lines));
+    const output = spec(inputIterator(lines));
+    if (outputFilename) {
+        fs.writeFileSync(outputFilename, output.join('\n'));
+    } else {
+        output.forEach(line => console.log(line));
+    }
 }
