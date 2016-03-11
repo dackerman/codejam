@@ -1,46 +1,41 @@
 import fs from 'fs';
 
-function runRunEach(input, fn, nextParser) {
+function parserFn(fn) {
+    return (...args) => {
+        return input => {
+            return fn.apply(null, [input].concat(args));
+        };
+    };
+}
+
+export const runEach = parserFn((input, fn, ...argsParsers) => {
     const count = input.next();
     let output = [];
     for (let i = 0; i < count; i++) {
-        const result = fn(nextParser(input));
+        const args = argsParsers.map(fn => fn(input));
+        const result = fn.apply(null, args);
         output.push(`Case #${i+1}: ${result}`);
     }
     return output;
-}
+});
 
-function runParseList(input, nextParser) {
+export const parseNumber = parserFn(input => {
+    return parseInt(input.next());
+});
+
+export const parseList = parserFn((input, listItemParser) => {
     const count = input.next();
     let out = [];
     for (let i = 0; i < count; i++) {
-        out.push(nextParser(input));
+        out.push(listItemParser(input));
     }
     return out;
-}
+});
 
-export function runParseObject(input, fn) {
+export const parseObject = parserFn((input, fn) => {
     const line = input.next();
     return fn(line);
-}
-
-export function runEach(fn, parser) {
-    return (input) => {
-        return runRunEach(input, fn, parser);
-    };
-}
-
-export function parseList(parser) {
-    return (input) => {
-        return runParseList(input, parser);
-    };
-}
-
-export function parseObject(fn) {
-    return (input) => {
-        return runParseObject(input, fn);
-    };
-}
+});
 
 export function inputIterator(input) {
     let idx = 0;
