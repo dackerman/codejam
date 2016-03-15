@@ -9,9 +9,10 @@
 
 This command runs the 'rope-intranet' problem (see
 `problems/rope-intranet.js`) with the input file given in the same
-directory.
+directory, and output file named `answer.txt`. If you omit the output
+file, it will print the answer to stdout.
 
-`npm start -- --problem='rope-intranet' --input='rope-intranet-small.in'`
+`npm start -- --problem='rope-intranet' --input='./problems/rope-intranet-small.in' --output='answer.txt'`
 
 ## Adding your solutions
 

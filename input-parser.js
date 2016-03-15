@@ -37,6 +37,12 @@ export const parseObject = parserFn((input, fn) => {
     return fn(line);
 });
 
+export function parseListObject() {
+    return parseObject(line => {
+        return line.split(' ').map(s => parseInt(s));
+    })
+};
+
 export function inputIterator(input) {
     let idx = 0;
     const api = {
@@ -50,7 +56,7 @@ export function inputIterator(input) {
 
 export function run(filename, outputFilename, spec) {
     let lines = fs.readFileSync(filename, {encoding: 'utf-8'}).split('\n');
-    lines = lines.splice(0, lines.length - 1);
+    lines = lines.filter(a => a); // remove blank lines
     const output = spec(inputIterator(lines));
     if (outputFilename) {
         fs.writeFileSync(outputFilename, output.join('\n'));

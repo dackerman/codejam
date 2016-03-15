@@ -44,10 +44,7 @@ const parseVector = parseObject(line => line.split(' ').map(a => parseInt(a)));
 let t = 0;
 
 export const spec = runEach(
-    (n, v1, v2) => {
-        //return minScalarSlow(v1, v2);
-        return minScalarFast(n, v1, v2);
-    },
+    minScalarFast,
     parseNumber(),
     parseVector,
     parseVector
