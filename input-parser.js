@@ -19,8 +19,12 @@ export const runEach = parserFn((input, fn, ...argsParsers) => {
     return output;
 });
 
-export const parseNumber = parserFn(input => {
-    return parseInt(input.next());
+export const parseNumber = parserFn(input => parseInt(input.next()));
+
+export const parseString = parserFn(input => input.next());
+
+export const parseListObject = parserFn(input => {
+    return input.next().split(' ').map(s => parseInt(s));
 });
 
 export const parseList = parserFn((input, listItemParser) => {
@@ -36,12 +40,6 @@ export const parseObject = parserFn((input, fn) => {
     const line = input.next();
     return fn(line);
 });
-
-export function parseListObject() {
-    return parseObject(line => {
-        return line.split(' ').map(s => parseInt(s));
-    })
-};
 
 export function inputIterator(input) {
     let idx = 0;
