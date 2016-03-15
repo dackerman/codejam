@@ -14,10 +14,14 @@ export const runEach = parserFn((input, fn, ...argsParsers) => {
     for (let i = 0; i < count; i++) {
         const args = argsParsers.map(fn => fn(input));
         const result = fn.apply(null, args);
-        output.push(`Case #${i+1}: ${result}`);
+        output.push(formatTestCase(i, result));
     }
     return output;
 });
+
+export function formatTestCase(i, contents) {
+    return `Case #${i+1}: ${contents}`;
+}
 
 export const parseNumber = parserFn(input => parseInt(input.next()));
 
