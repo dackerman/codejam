@@ -14,6 +14,7 @@
     "babel-preset-stage-2": "^6.5.0"
   },
   "dependencies": {
+    "big-integer": "^1.6.12",
     "yargs": "^4.2.0"
   }
 }
